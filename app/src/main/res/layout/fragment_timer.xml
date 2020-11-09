@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/timerContainer"
     tools:context=".MainActivity">
 
     <TextView
@@ -25,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="312dp"
         android:clickable="true"
-        android:onClick="startTimer"
         android:tint="#3F51B5"
         app:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
