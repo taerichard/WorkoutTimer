@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,20 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Log.i("INFO", "BUTTON CLICKED FROM ACTIVITY");
-        shoulderButton.setVisibility(View.GONE);
-        timerFragment = new TimerFragment();
-        FragmentManager fm = getSupportFragmentManager();
+        Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
 
-        switch (v.getId()) {
+        switch(v.getId()){
             case R.id.button_shoulders : {
-                Log.i("INFO", "Shoulder Button Pressed");
-                fm.beginTransaction().replace(R.id.mainContainer, TimerFragment.newInstance("Shoulder Workout")).commit();
-                break;
+                intent.putExtra("seconds", 30);
+                startActivity(intent);
             }
-            default : {
+            default:{
                 break;
             }
         }
-
     }
 }
