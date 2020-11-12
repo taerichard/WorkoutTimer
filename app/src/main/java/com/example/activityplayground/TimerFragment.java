@@ -23,7 +23,7 @@ import static android.os.Looper.getMainLooper;
 
 public class TimerFragment extends Fragment{
 
-
+    private static TextView workoutTitle;
     private int seconds = 0;
     private TextView tv;
     private FloatingActionButton timerButton;
@@ -44,6 +44,8 @@ public class TimerFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // workout title
+        workoutTitle = view.findViewById(R.id.workout_title);
         // timer text
         tv = view.findViewById(R.id.time_text);
         // timer button
@@ -92,11 +94,14 @@ public class TimerFragment extends Fragment{
         });
     }
 
-    public static TimerFragment newInstance() {
+    public static TimerFragment newInstance(String workoutType, int seconds) {
         TimerFragment timerFragment = new TimerFragment();
         Bundle args = new Bundle();
-    /*    args.putString("workout", workout);
-        timerFragment.setArguments(args);*/
+        args.putString("workoutType", workoutType);
+        args.putInt("seconds", seconds);
+        timerFragment.setArguments(args);
+        Log.i("INFO", "COMING FROM newINSTANCE " + workoutType + " " + seconds);
+
         return timerFragment;
     }
 }

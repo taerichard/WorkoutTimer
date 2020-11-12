@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/legs_button"
-        android:layout_width="121dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="37dp"
         android:layout_marginBottom="363dp"
         android:text="Legs"
