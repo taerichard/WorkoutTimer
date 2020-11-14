@@ -1,5 +1,6 @@
 package com.example.activityplayground;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -19,19 +20,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
+import java.util.concurrent.Future;
+
 import static android.os.Looper.getMainLooper;
 
 public class TimerFragment extends Fragment{
 
-    private static TextView workoutTitle;
+    private TextView finishMessage;
     private int seconds = 0;
-    private TextView tv;
+    private int workoutSeconds;
+    // time in fragment layout
+    private TextView workoutTextView;
+    private TextView timeText;
     private FloatingActionButton timerButton;
     private boolean paused = true;  // first application is paused before running
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -44,10 +51,18 @@ public class TimerFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // workout title
-        workoutTitle = view.findViewById(R.id.workout_title);
-        // timer text
-        tv = view.findViewById(R.id.time_text);
+        // finish textview
+        finishMessage = view.findViewById(R.id.finish_message);
+
+        // getting the arguments from bundle
+        workoutTextView = view.findViewById(R.id.workout_title);
+        timeText = view.findViewById(R.id.time_text);
+
+
+        String workoutTitle = getArguments().getString("workoutType");
+        workoutSeconds = getArguments().getInt("seconds");
+        workoutTextView.setText(String.format(workoutTitle));
+        timeText.setText(String.format("%02d : %02d : %02d", 00, 00, workoutSeconds));
         // timer button
         timerButton = view.findViewById(R.id.play_pause_fab);
         // timer starts when clicked
@@ -74,20 +89,26 @@ public class TimerFragment extends Fragment{
         timerButton.setImageDrawable(icon);
     }
 
+
     public void runTimer(){
         final Handler handler = new Handler(getMainLooper());
-        Log.i("INFO", "fag");
         // schedules a piece of code that can run at a later time.
+
         handler.post(new Runnable() {
             @Override
             public void run() {
-                int sec = seconds % 60;
-                int min = (seconds % 3600) / 60;
-                int hour = seconds/60;
-                tv.setText(String.format("%02d : %02d : %02d", hour, min, sec));
+               //* int sec = seconds % 60*//*
+                int sec = workoutSeconds % 60;
+                int min = (sec % 3600) / 60;
+                int hour = sec/60;
+                timeText.setText(String.format("%02d : %02d : %02d", hour, min, sec));
                 if(!paused){
-                    Log.i("INFO", "inside runTimer");
-                    seconds++;
+                    workoutSeconds--;
+                    if(workoutSeconds == 0){
+                       /* handler.removeCallbacksAndMessages(null);*/
+                        paused = true;
+                        finishMessage.setText("Finished! Great Job!");
+                    }
                     handler.postDelayed(this, 1000);  //runs the runnable again after a second
                 }
             }
@@ -100,8 +121,7 @@ public class TimerFragment extends Fragment{
         args.putString("workoutType", workoutType);
         args.putInt("seconds", seconds);
         timerFragment.setArguments(args);
-        Log.i("INFO", "COMING FROM newINSTANCE " + workoutType + " " + seconds);
-
         return timerFragment;
     }
+
 }

@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chestButton.setOnClickListener(this);
         // leg button
         legButton = findViewById(R.id.legs_button);
+        Log.i("INFO","legs " + legButton);
         legButton.setOnClickListener(this);
     }
 
@@ -45,20 +46,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Log.i("INFO", "BUTTON CLICKED FROM ACTIVITY");
 
         switch(v.getId()){
             case R.id.button_shoulders : {
-                Intent intent = addData("Shoulder Workout", 30);
+                Intent intent = addData("Shoulder Workout", 3);
                 startActivity(intent);
+                break;
             }
             case R.id.legs_button : {
-                Intent intent = addData("Leg Workout", 100);
+                Intent intent = addData("Leg Workout", 30);
                 startActivity(intent);
+                break;
             }
             case R.id.chest_button : {
-               Intent intent = addData("Chest Workout", 15);
+               Intent intent = addData("Chest Workout", 5);
                 startActivity(intent);
+                break;
             }
             default:{
                 break;
